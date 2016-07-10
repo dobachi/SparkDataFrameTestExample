@@ -2,7 +2,7 @@
 // http://www.scala-sbt.org/0.13/docs/index.html
 
 // Project name
-name := ""spark-parallel-sqltest""
+name := """spark-parallel-sqltest"""
 
 // Don't forget to set the version
 version := "0.1.0-SNAPSHOT"
@@ -28,7 +28,7 @@ fork in console := true
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 
 // add a JVM option to use when forking a JVM for 'run'
-javaOptions ++= Seq("-Xmx2G")
+javaOptions ++= Seq("-Xmx2g", "-Dspark.master=local[2]")
 
 // append -deprecation to the options passed to the Scala compiler
 scalacOptions ++= Seq("-deprecation", "-unchecked")
@@ -41,6 +41,7 @@ val sparkDependencyScope = "provided"
 libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-core" % sparkVersion % sparkDependencyScope,
   "org.apache.spark" %% "spark-sql" % sparkVersion % sparkDependencyScope,
+  "org.apache.spark" %% "spark-hive" % sparkVersion % sparkDependencyScope,
   "org.apache.spark" %% "spark-mllib" % sparkVersion % sparkDependencyScope,
   "org.apache.spark" %% "spark-streaming" % sparkVersion % sparkDependencyScope
 )

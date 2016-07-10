@@ -2,8 +2,9 @@ package example
 
 import java.sql.Timestamp
 
-import org.apache.spark.SparkConf
-import org.apache.spark.sql.hive.test._
+import org.apache.spark.{SparkContext, SparkConf}
+import org.apache.spark.sql.SQLContext
+import org.apache.spark.sql.hive.test.TestHiveContext
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen._
 import org.scalacheck.Prop.{exists, forAll}
@@ -17,8 +18,9 @@ class ExampleTest extends FunSuite {
 
   import example.Example._
 
-  val sparkConf = new SparkConf()
-  implicit def sqlc = new TestHiveContext(sparkConf)
+  val sparkConf = new SparkConf().setAppName("SQLTest")
+  val sc = new SparkContext(sparkConf)
+  implicit val sqlc: SQLContext = new TestHiveContext(sc)
 
   test("randomDataset has correct #rows") {
     val d = randomDataset(10)
