@@ -80,6 +80,6 @@ However `sbt console` does not recognize fork key right now. It might throw Scal
 
 - dobachi (dobachi1983oss@gmail.com)
 
-### Apllication template
+### Application template
 
 - Jianshi Huang (jianshuang@paypal.com; jianshi.huang@gmail.com)
