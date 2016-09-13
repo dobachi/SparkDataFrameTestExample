@@ -3,11 +3,12 @@ package example
 import org.apache.spark.sql.hive.test.TestHiveSingleton
 import org.apache.spark.sql.{DataFrame, QueryTest, Row}
 import org.scalatest.BeforeAndAfterAll
+import util.TestDataUtil
 
 /**
   * Created by dobachi on 2016/07/11.
   */
-class SQLQueryUtilSuite extends QueryTest with TestHiveSingleton with BeforeAndAfterAll{
+class SQLQueryUtilSuite extends QueryTest with TestHiveSingleton with BeforeAndAfterAll with TestDataUtil {
 
    import hiveContext.implicits._
 
@@ -29,4 +30,9 @@ class SQLQueryUtilSuite extends QueryTest with TestHiveSingleton with BeforeAndA
      checkAnswer(SQLQueryUtil.groupCountByValue(tableName, hiveContext),
        Row("a", 2) :: Row("b", 2) :: Nil)
    }
+
+  test("parquet") {
+    checkAnswer(readResourceParquetFile("people.parquet"),
+      Row("Andy", 32) :: Row("John", 26) :: Nil)
+  }
  }
